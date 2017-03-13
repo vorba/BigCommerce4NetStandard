@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigCommerce4NetStandard.Domain", "BigCommerce4NetStandard.Domain\BigCommerce4NetStandard.Domain.csproj", "{0A8B96C4-4FBE-4772-84AA-0B3D023F2E21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigCommerce4NetStandard.Api", "BigCommerce4NetStandard.Api\BigCommerce4NetStandard.Api.csproj", "{0AE9C4BE-FBAD-40BE-BD47-A6E0F59EF84D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigCommerce4NetStandard.Api.Test", "BigCommerce4NetStandard.Api.Test\BigCommerce4NetStandard.Api.Test.csproj", "{BAD78EB0-9136-4662-9719-D6084F1B0197}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A8B96C4-4FBE-4772-84AA-0B3D023F2E21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A8B96C4-4FBE-4772-84AA-0B3D023F2E21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A8B96C4-4FBE-4772-84AA-0B3D023F2E21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A8B96C4-4FBE-4772-84AA-0B3D023F2E21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AE9C4BE-FBAD-40BE-BD47-A6E0F59EF84D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AE9C4BE-FBAD-40BE-BD47-A6E0F59EF84D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AE9C4BE-FBAD-40BE-BD47-A6E0F59EF84D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AE9C4BE-FBAD-40BE-BD47-A6E0F59EF84D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD78EB0-9136-4662-9719-D6084F1B0197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD78EB0-9136-4662-9719-D6084F1B0197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD78EB0-9136-4662-9719-D6084F1B0197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD78EB0-9136-4662-9719-D6084F1B0197}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
