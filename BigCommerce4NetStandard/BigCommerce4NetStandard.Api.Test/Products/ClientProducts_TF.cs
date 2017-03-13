@@ -33,5 +33,28 @@ namespace BigCommerce4NetStandard.Api.Test.Products
             Assert.AreEqual(response.RestResponse.StatusCode, System.Net.HttpStatusCode.OK);
             Assert.AreNotEqual(response.Data, null);
         }
+
+        [Test]
+        public void Can_Get_Count()
+        {
+
+            var response = Client.Products.Count();
+            Assert.AreEqual(response.RestResponse.StatusCode, System.Net.HttpStatusCode.OK);
+            Assert.AreNotEqual(response.Data, null);
+            Assert.Greater(response.Data.Count, 0);
+        }
+
+        [Test]
+        public void Can_Get_Filtered()
+        {
+            var response = Client.Products.Get(
+                new FilterOrders
+                {
+                    Limit = 10,
+                });
+            Assert.AreEqual(response.RestResponse.StatusCode, System.Net.HttpStatusCode.OK);
+            Assert.AreNotEqual(response.Data, null);
+            Assert.AreEqual(response.Data.Count, 10);
+        }
     }
 }
