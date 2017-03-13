@@ -226,11 +226,17 @@ namespace BigCommerce4NetStandard.Api
             request.AddParameter("Accept", "application/json", ParameterType.HttpHeader);
             request.AddParameter("User-Agent", _Configuration.UserAgent, ParameterType.HttpHeader);
 
-
             ((RestClient)restClient).AddHandler("application/json", new Deserializers.NewtonSoftJsonDeserializer());
             
             var client = restClient;
-            client.Authenticator = new HttpBasicAuthenticator(_Configuration.UserName, _Configuration.UserApiKey);
+
+            //
+            //  authentication
+            //
+            //client.Authenticator = new HttpBasicAuthenticator(_Configuration.UserName, _Configuration.UserApiKey);
+            request.AddParameter("X-Auth-Client", _Configuration.ClientId, ParameterType.HttpHeader);
+            request.AddParameter("X-Auth-Token", _Configuration.AccessToken, ParameterType.HttpHeader);
+
             client.Timeout = _Configuration.RequestTimeout;
 
             var response = client.Execute<T>(request);
