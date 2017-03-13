@@ -35,6 +35,8 @@ namespace BigCommerce4NetStandard.Api
         public int MaxPageLimit { get; set; }
         public int RecordsPerPage { get; set; }
         public bool AllowDeletions { get; set; }
+        public string ClientId { get; set; }
+        public string AccessToken { get; set; }
 
 
         public Configuration() {

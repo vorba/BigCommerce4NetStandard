@@ -49,7 +49,9 @@ namespace BigCommerce4NetStandard.Api.Test
             Api_Configuration = new Api.Configuration() {
                 ServiceURL = settings.ServiceURL,
                 UserName = settings.UserName,
-                UserApiKey = settings.UserApiKey
+                UserApiKey = settings.UserApiKey,
+                ClientId = settings.ClientId,
+                AccessToken = settings.AccessToken,
             };
 
         }
@@ -57,9 +59,11 @@ namespace BigCommerce4NetStandard.Api.Test
 
             TestSettings settings = null;
 
-            if (File.Exists("TEST_SETTINGS.json")) {
+            string settingsFilePath = $"{System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)}\\TEST_SETTINGS.json";
 
-                using (StreamReader r = new StreamReader("TEST_SETTINGS.json")) {
+            if (File.Exists(settingsFilePath)) {
+
+                using (StreamReader r = new StreamReader(settingsFilePath)) {
                     string json = r.ReadToEnd();
                     settings = JsonConvert.DeserializeObject<TestSettings>(json);
                 }
@@ -91,5 +95,7 @@ namespace BigCommerce4NetStandard.Api.Test
         public string ServiceURL { get; set; }
         public string UserName { get; set; }
         public string UserApiKey { get; set; }
+        public string ClientId { get; set; }
+        public string AccessToken { get; set; }
     }
 }
