@@ -43,5 +43,23 @@ namespace BigCommerce4NetStandard.Domain.ExtensionMethods
             else
                 return ((DateTime)theDateTime).ToUniversalTime().ToString("r");
         }
+
+        #region Extension attributes
+        //
+        //  [JsonIgnoreSerialization]
+        //
+        // http://stackoverflow.com/questions/11564091/making-a-property-deserialize-but-not-serialize-with-json-net
+        public class JsonPropertiesResolver : Newtonsoft.Json.Serialization.DefaultContractResolver
+        {
+            protected override List<System.Reflection.MemberInfo> GetSerializableMembers(Type objectType)
+            {
+                //Return properties that do NOT have the JsonIgnoreSerializationAttribute
+                return objectType.GetProperties()
+                    .Where(pi => !Attribute.IsDefined(pi, typeof(JsonIgnoreSerializationAttribute)))
+                    .ToList<System.Reflection.MemberInfo>();
+            }
+        }
     }
+    public class JsonIgnoreSerializationAttribute : Attribute { }
+    #endregion // Extension attributes
 }
