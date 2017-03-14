@@ -285,14 +285,13 @@ namespace BigCommerce4NetStandard.Api
             return response;
         }
 
-        private async Task<IRestResponse<T>> RestExecuteAsync2<T>(IRestRequest request, IRestClient restClient) where T : new()
+        private async Task<IRestResponse<T>> RestExecuteAsync<T>(IRestRequest request, IRestClient restClient) where T : new()
         {
-
             request.RequestFormat = DataFormat.Json;
             request.AddParameter("Accept", "application/json", ParameterType.HttpHeader);
             request.AddParameter("User-Agent", _Configuration.UserAgent, ParameterType.HttpHeader);
 
-            //((RestClient)restClient).AddHandler("application/json", new Deserializers.NewtonSoftJsonDeserializer());
+            ((RestClient)restClient).AddHandler("application/json", new Deserializers.NewtonSoftJsonDeserializer());
 
             var client = restClient;
 
@@ -305,30 +304,13 @@ namespace BigCommerce4NetStandard.Api
 
             client.Timeout = _Configuration.RequestTimeout;
 
-            //var response = client.ExecuteAsync<T>(request);
+            var cancellationTokenSource = new CancellationTokenSource();
 
-            //CheckForThrottling(response);
+            var response = await client.ExecuteTaskAsync<T>(request, cancellationTokenSource.Token);
 
-            //return response;
+            CheckForThrottling(response);
 
-            IRestResponse<T> response = new RestResponse<T>();
-            var tcs = new TaskCompletionSource<IRestResponse<T>>();
-            client.ExecuteAsync<RestResponse<T>>(
-                request, r =>
-                {
-                    if (r.ResponseStatus == ResponseStatus.Completed)
-                    {
-                        //tcs.SetResult(r.Data);
-                        var deserializer = new Deserializers.NewtonSoftJsonDeserializer();
-                        deserializer.Deserialize<RestResponse<T>>(r.Data);
-                        tcs.SetResult(deserializer as RestResponse<T>);
-                    }
-                    else if (r.ErrorException != null)
-                        throw new ApplicationException("Request failed", r.ErrorException);
-                    else
-                        return;
-                });
-            return await tcs.Task as RestResponse<T>;
+            return response;
         }
 
         private void CheckForThrottling(IRestResponse response) {
