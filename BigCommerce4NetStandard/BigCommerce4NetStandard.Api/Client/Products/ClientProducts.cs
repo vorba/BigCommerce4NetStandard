@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BigCommerce4NetStandard.Domain;
 using BigCommerce4NetStandard.Api.ExtensionMethods;
+using System.Threading.Tasks;
 
 namespace BigCommerce4NetStandard.Api.ResourceClients
 {
@@ -43,6 +44,11 @@ namespace BigCommerce4NetStandard.Api.ResourceClients
         public IClientResponse<List<Product>> Get(IFilter filter) {
             string resourceEndpoint = "/products";
             return base.GetData<List<Product>>(resourceEndpoint, filter);
+        }
+        public async Task<IClientResponse<List<Product>>> GetAsync(IFilter filter)
+        {
+            string resourceEndpoint = "/products";
+            return await base.GetDataAsync<List<Product>>(resourceEndpoint, filter);
         }
         public IClientResponse<Product> Get(int id) {
             string resourceEndpoint = string.Format("/products/{0}", id);

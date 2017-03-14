@@ -20,6 +20,7 @@ using System.Linq;
 using NUnit.Framework;
 using Api = BigCommerce4NetStandard.Api;
 using Domain = BigCommerce4NetStandard.Domain;
+using System.Threading.Tasks;
 
 namespace BigCommerce4NetStandard.Api.Test.Products
 {
@@ -48,6 +49,19 @@ namespace BigCommerce4NetStandard.Api.Test.Products
         public void Can_Get_Filtered()
         {
             var response = Client.Products.Get(
+                new FilterOrders
+                {
+                    Limit = 10,
+                });
+            Assert.AreEqual(response.RestResponse.StatusCode, System.Net.HttpStatusCode.OK);
+            Assert.AreNotEqual(response.Data, null);
+            Assert.AreEqual(response.Data.Count, 10);
+        }
+
+        [Test]
+        public async Task Can_Get_Filtered_Async()
+        {
+            var response = await Client.Products.GetAsync(
                 new FilterOrders
                 {
                     Limit = 10,

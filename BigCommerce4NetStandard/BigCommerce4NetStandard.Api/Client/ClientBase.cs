@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using RestSharp;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace BigCommerce4NetStandard.Api
 {
@@ -80,6 +81,33 @@ namespace BigCommerce4NetStandard.Api
             }
 
             DeserializeErrorData<T>(clientResponse);
+            return (IClientResponse<T>)clientResponse;
+        }
+
+        protected async Task<IClientResponse<T>> GetDataAsync<T>(string resourceEndpoint, IFilter filter)
+            where T : new()
+        {
+            var request = new RestRequest(resourceEndpoint);
+
+            if (filter != null)
+            {
+                filter.AddFilter(request);
+            }
+
+            var response = await RestGetAsync<T>(request);
+
+            var clientResponse = new ClientResponse<T>()
+            {
+                RestResponse = response,
+            };
+
+            if (response.Data != null)
+            {
+                clientResponse.Data = response.Data;
+            }
+
+            DeserializeErrorData<T>(clientResponse);
+
             return (IClientResponse<T>)clientResponse;
         }
 
@@ -181,6 +209,18 @@ namespace BigCommerce4NetStandard.Api
 
             return response;
         }
+
+        private async Task<IRestResponse<T>> RestGetAsync<T>(IRestRequest request) where T : new()
+        {
+            request.Method = Method.GET;
+
+            var client = new RestClient(_Configuration.ServiceURL);
+
+            var response = await RestExecuteAsync<T>(request, client);
+
+            return response;
+        }
+
         private IRestResponse<T> RestPut<T>(IRestRequest request) where T : new() {
             request.Method = Method.PUT;
 
@@ -217,9 +257,7 @@ namespace BigCommerce4NetStandard.Api
 
             return response;
         }
-
-
-
+        
         private IRestResponse<T> RestExecute<T>(IRestRequest request, IRestClient restClient) where T : new() {
 
             request.RequestFormat = DataFormat.Json;
@@ -245,6 +283,46 @@ namespace BigCommerce4NetStandard.Api
 
             return response;
         }
+
+        private async Task<IRestResponse<T>> RestExecuteAsync<T>(IRestRequest request, IRestClient restClient) where T : new()
+        {
+
+            request.RequestFormat = DataFormat.Json;
+            request.AddParameter("Accept", "application/json", ParameterType.HttpHeader);
+            request.AddParameter("User-Agent", _Configuration.UserAgent, ParameterType.HttpHeader);
+
+            ((RestClient)restClient).AddHandler("application/json", new Deserializers.NewtonSoftJsonDeserializer());
+
+            var client = restClient;
+
+            //
+            //  authentication
+            //
+            //client.Authenticator = new HttpBasicAuthenticator(_Configuration.UserName, _Configuration.UserApiKey);
+            request.AddParameter("X-Auth-Client", _Configuration.ClientId, ParameterType.HttpHeader);
+            request.AddParameter("X-Auth-Token", _Configuration.AccessToken, ParameterType.HttpHeader);
+
+            client.Timeout = _Configuration.RequestTimeout;
+
+            //var response = client.ExecuteAsync<T>(request);
+
+            //CheckForThrottling(response);
+
+            //return response;
+
+            IRestResponse<T> response = new RestResponse<T>();
+            var tcs = new TaskCompletionSource<IRestResponse<T>>();
+            client.ExecuteAsync<RestResponse<T>>(
+                request, r =>
+                {
+                    if (r.ResponseStatus == ResponseStatus.Completed)
+                        tcs.SetResult(r.Data);
+                    else
+                        throw new ApplicationException("Request failed", r.ErrorException);
+                });
+            return await tcs.Task;
+        }
+
         private void CheckForThrottling(IRestResponse response) {
             if (_Configuration.RequestThrottling == true) {
                 var head = response.Headers.Where(x => x.Name == "X-BC-ApiLimit-Remaining").FirstOrDefault();
