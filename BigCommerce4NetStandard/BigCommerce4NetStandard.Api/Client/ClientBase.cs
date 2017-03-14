@@ -21,6 +21,7 @@ using System.Text;
 using RestSharp;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace BigCommerce4NetStandard.Api
 {
@@ -284,14 +285,14 @@ namespace BigCommerce4NetStandard.Api
             return response;
         }
 
-        private async Task<IRestResponse<T>> RestExecuteAsync<T>(IRestRequest request, IRestClient restClient) where T : new()
+        private async Task<IRestResponse<T>> RestExecuteAsync2<T>(IRestRequest request, IRestClient restClient) where T : new()
         {
 
             request.RequestFormat = DataFormat.Json;
             request.AddParameter("Accept", "application/json", ParameterType.HttpHeader);
             request.AddParameter("User-Agent", _Configuration.UserAgent, ParameterType.HttpHeader);
 
-            ((RestClient)restClient).AddHandler("application/json", new Deserializers.NewtonSoftJsonDeserializer());
+            //((RestClient)restClient).AddHandler("application/json", new Deserializers.NewtonSoftJsonDeserializer());
 
             var client = restClient;
 
@@ -316,11 +317,18 @@ namespace BigCommerce4NetStandard.Api
                 request, r =>
                 {
                     if (r.ResponseStatus == ResponseStatus.Completed)
-                        tcs.SetResult(r.Data);
-                    else
+                    {
+                        //tcs.SetResult(r.Data);
+                        var deserializer = new Deserializers.NewtonSoftJsonDeserializer();
+                        deserializer.Deserialize<RestResponse<T>>(r.Data);
+                        tcs.SetResult(deserializer as RestResponse<T>);
+                    }
+                    else if (r.ErrorException != null)
                         throw new ApplicationException("Request failed", r.ErrorException);
+                    else
+                        return;
                 });
-            return await tcs.Task;
+            return await tcs.Task as RestResponse<T>;
         }
 
         private void CheckForThrottling(IRestResponse response) {
