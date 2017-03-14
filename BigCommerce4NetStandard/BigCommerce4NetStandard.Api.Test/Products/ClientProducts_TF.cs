@@ -56,5 +56,22 @@ namespace BigCommerce4NetStandard.Api.Test.Products
             Assert.AreNotEqual(response.Data, null);
             Assert.AreEqual(response.Data.Count, 10);
         }
+
+        [Test]
+        public void Can_Create()
+        {
+            var sku = Guid.NewGuid().ToString();
+            var response = Client.Products.Create(
+                new Domain.Product
+                {
+                    Name = "Test",
+                    Categories = new List<int>() { 22 },
+                    Sku = sku,
+                    Description = $"Test Product (sku: {sku})",
+                    
+                });
+            Assert.AreEqual(response.RestResponse.StatusCode, System.Net.HttpStatusCode.Created);
+            Assert.AreEqual(response.Data.Sku, sku);
+        }
     }
 }

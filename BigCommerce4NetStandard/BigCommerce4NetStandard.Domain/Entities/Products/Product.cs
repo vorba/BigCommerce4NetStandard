@@ -90,6 +90,7 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [text]
         /// </summary>
+        
         [JsonProperty("search_keywords")]
         public virtual string SearchKeywords { get; set; }
 
@@ -160,8 +161,9 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [string(250)]
         /// </summary>
-        [JsonProperty("related_products")]
-        public virtual string RelatedProducts { get; set; }
+        //[System.ComponentModel.DefaultValue("")]
+        [JsonProperty("related_products", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string RelatedProducts { get; set; } = string.Empty;
 
         /// <summary>
         /// Current inventory level of the product. Simple inventory tracking must be enabled 
@@ -184,8 +186,9 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [text]
         /// </summary>
-        [JsonProperty("warranty")]
-        public virtual string Warranty { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("warranty", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string Warranty { get; set; } = string.Empty;
 
         /// <summary>
         /// Weight of the product used which can be used when calculating shipping costs.
@@ -258,7 +261,9 @@ namespace BigCommerce4NetStandard.Domain
         [JsonIgnore]
         public virtual DateTime? DateCreated { get; set; }
 
-        [JsonProperty("date_created")]
+        //[JsonIgnoreSerialization]
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("date_created", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual string DateCreatedUT
         {
             get
@@ -290,8 +295,9 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [string(250)]
         /// </summary>
-        [JsonProperty("page_title")]
-        public virtual string PageTitle { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("page_title", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string PageTitle { get; set; } = string.Empty;
 
         /// <summary>
         /// Custom meta keywords for the product page, if not defined the store 
@@ -316,8 +322,9 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [string(50)]
         /// </summary>
-        [JsonProperty("layout_file")]
-        public virtual string LayoutFile { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("layout_file", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string LayoutFile { get; set; } = string.Empty;
 
         /// <summary>
         /// Flag used to determine if the price for this product should be hidden on the product page.
@@ -331,8 +338,9 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [string(200)]
         /// </summary>
-        [JsonProperty("price_hidden_label")]
-        public virtual string PriceHiddenLabel { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("price_hidden_label", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string PriceHiddenLabel { get; set; } = string.Empty;
 
         /// <summary>
         /// An array of IDs for the categories this product belongs to. 
@@ -347,7 +355,8 @@ namespace BigCommerce4NetStandard.Domain
         [JsonIgnore]
         public virtual DateTime? DateModified { get; set; }
 
-        [JsonProperty("date_modified")]
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("date_modified", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual string DateModifiedUT
         {
             get
@@ -384,7 +393,8 @@ namespace BigCommerce4NetStandard.Domain
         [JsonIgnore]
         public virtual DateTime? EventDateStart { get; set; }
 
-        [JsonProperty("event_date_start")]
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("event_date_start", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual string EventDateStartUT
         {
             get
@@ -404,7 +414,8 @@ namespace BigCommerce4NetStandard.Domain
         [JsonIgnore]
         public virtual DateTime? EventDateEnd { get; set; }
 
-        [JsonProperty("event_date_end")]
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("event_date_end", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual string EventDateEndUT
         {
             get
@@ -422,32 +433,36 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [string(20)]
         /// </summary>
-        [JsonProperty("myob_asset_account")]
-        public virtual string MyobAssetAccount { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("myob_asset_account", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string MyobAssetAccount { get; set; } = string.Empty;
 
         /// <summary>
         /// MYOB Income Account.
         /// 
         /// [string(20)]
         /// </summary>
-        [JsonProperty("myob_income_account")]
-        public virtual string MyobIncomeAccount { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("myob_income_account", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string MyobIncomeAccount { get; set; } = string.Empty;
 
         /// <summary>
         /// MYOB Expense/COS Account.
         /// 
         /// [string(20)]
         /// </summary>
-        [JsonProperty("myob_expense_account")]
-        public virtual string MyobExpenseAccount { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("myob_expense_account", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string MyobExpenseAccount { get; set; } = string.Empty;
 
         /// <summary>
         /// Peachtree General Ledger Account.
         /// 
         /// [string(20)]
         /// </summary>
-        [JsonProperty("peachtree_gl_account")]
-        public virtual string PeachtreeGlAccount { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("peachtree_gl_account", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string PeachtreeGlAccount { get; set; } = string.Empty;
 
         /// <summary>
         /// The product condition, will be shown on the product page if the value of 
@@ -473,7 +488,8 @@ namespace BigCommerce4NetStandard.Domain
         [JsonIgnore]
         public virtual DateTime? PreorderReleaseDate { get; set; }
 
-        [JsonProperty("preorder_release_date")]
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("preorder_release_date", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual string PreorderReleaseDateUT
         {
             get
@@ -499,8 +515,9 @@ namespace BigCommerce4NetStandard.Domain
         /// the message defaults to the store wide setting. Can contain the %%DATE%% 
         /// place holder which will be substituted for the release date
         /// </summary>
-        [JsonProperty("preorder_message")]
-        public virtual string PreorderMessage { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("preorder_message", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string PreorderMessage { get; set; } = string.Empty;
 
         /// <summary>
         /// The minimum quantity an order has to contain to be able to purchase this product.
@@ -534,8 +551,9 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [string(250)]
         /// </summary>
-        [JsonProperty("open_graph_title")]
-        public virtual string OpenGraphTitle { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("open_graph_title", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string OpenGraphTitle { get; set; } = string.Empty;
 
         /// <summary>
         /// Description to use for the product, if not specified then the meta_description 
@@ -543,8 +561,9 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [text]
         /// </summary>
-        [JsonProperty("open_graph_description")]
-        public virtual string OpenGraphDescription { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("open_graph_description", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string OpenGraphDescription { get; set; } = string.Empty;
 
         /// <summary>
         /// If set to true, the product thumbnail image will be used as the open graph image.
@@ -557,8 +576,9 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [string(32)]
         /// </summary>
-        [JsonProperty("upc")]
-        public virtual string Upc { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("upc", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string Upc { get; set; } = string.Empty;
 
         /// <summary>
         /// The date of which the product was last imported using the bulk importer.
@@ -566,7 +586,8 @@ namespace BigCommerce4NetStandard.Domain
         [JsonIgnore]
         public virtual DateTime? DateLastImported { get; set; }
 
-        [JsonProperty("date_last_imported")]
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("date_last_imported", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual string DateLastImportedUT
         {
             get
@@ -589,8 +610,9 @@ namespace BigCommerce4NetStandard.Domain
         /// <summary>
         /// The ID of the tax class applied to the product.
         /// </summary>
-        [JsonProperty("tax_class_id")]
-        public virtual int TaxClassId { get; set; }
+        [System.ComponentModel.DefaultValue(0)]
+        [JsonProperty("tax_class_id", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual int TaxClassId { get; set; } = 0;
 
         /// <summary>
         /// The position the option set options will be displayed on the product page.
@@ -603,8 +625,9 @@ namespace BigCommerce4NetStandard.Domain
         /// 
         /// [string(255)]
         /// </summary>
-        [JsonProperty("bin_picking_number")]
-        public virtual string BinPickingNumber { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("bin_picking_number", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string BinPickingNumber { get; set; } = string.Empty;
 
         /// <summary>
         /// Availability of the product. availability options: 
@@ -615,13 +638,15 @@ namespace BigCommerce4NetStandard.Domain
         [JsonProperty("availability")]
         public virtual ProductsAvailability Availability { get; set; }
 
-        [JsonProperty("custom_url")]
-        public virtual string CustomUrl { get; set; }
+        [System.ComponentModel.DefaultValue("")]
+        [JsonProperty("custom_url", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public virtual string CustomUrl { get; set; } = string.Empty;
 
         /// <summary>
         /// See the Images resource for information.
         /// </summary>
-        [JsonProperty("images")]
+        [System.ComponentModel.DefaultValue(null)]
+        [JsonProperty("images", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual Resource ResourceImages { get; set; }
 
         [JsonIgnore]
@@ -630,7 +655,8 @@ namespace BigCommerce4NetStandard.Domain
         /// <summary>
         /// See the Bulk Discount Rules resource for information.
         /// </summary>
-        [JsonProperty("discount_rules")]
+        [System.ComponentModel.DefaultValue(null)]
+        [JsonProperty("discount_rules", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual Resource ResourceDiscountRules { get; set; }
 
         [JsonIgnore]
@@ -639,7 +665,8 @@ namespace BigCommerce4NetStandard.Domain
         /// <summary>
         /// See the Configurable Fields resource for information.
         /// </summary>
-        [JsonProperty("configurable_fields")]
+        [System.ComponentModel.DefaultValue(null)]
+        [JsonProperty("configurable_fields", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual Resource ResourceConfigurableFields { get; set; }
 
         [JsonIgnore]
@@ -648,7 +675,8 @@ namespace BigCommerce4NetStandard.Domain
         /// <summary>
         /// See the Custom Fields resource for information.
         /// </summary>
-        [JsonProperty("custom_fields")]
+        [System.ComponentModel.DefaultValue(null)]
+        [JsonProperty("custom_fields", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual Resource ResourceCustomFields { get; set; }
 
         [JsonIgnore]
@@ -657,7 +685,8 @@ namespace BigCommerce4NetStandard.Domain
         /// <summary>
         /// See the Videos resource for information.
         /// </summary>
-        [JsonProperty("videos")]
+        [System.ComponentModel.DefaultValue(null)]
+        [JsonProperty("videos", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual Resource ResourceVideos { get; set; }
 
         [JsonIgnore]
@@ -666,7 +695,8 @@ namespace BigCommerce4NetStandard.Domain
         /// <summary>
         /// See the Option Set resource for information.
         /// </summary>
-        [JsonProperty("option_set")]
+        [System.ComponentModel.DefaultValue(null)]
+        [JsonProperty("option_set", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual Resource ResourceOptionSet { get; set; }
 
         [JsonIgnore]
@@ -676,27 +706,30 @@ namespace BigCommerce4NetStandard.Domain
         /// Rules which apply to this product only which are based on the products Option Set. 
         /// See Rules resource for information.
         /// </summary>
-        [JsonProperty("rules")]
+        [System.ComponentModel.DefaultValue(null)]
+        [JsonProperty("rules", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual Resource ResourceRules { get; set; }
 
         [JsonIgnore]
         public virtual IList<ProductsRule> Rules { get; set; }
-        
+
         /// <summary>
         /// Stock Keeping Units for the product. 
         /// See the SKU resource for the definition of a sku object.
         /// </summary>
-        [JsonProperty("skus")]
+        [System.ComponentModel.DefaultValue(null)]
+        [JsonProperty("skus", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual Resource ResourceSkus { get; set; }
 
         [JsonIgnore]
         public virtual IList<ProductsSku> Skus { get; set; }
-        
+
         /// <summary>
         /// Options from the option set applied to the product. 
         /// See the Product Options resource for information.
         /// </summary>
-        [JsonProperty("options")]
+        [System.ComponentModel.DefaultValue(null)]
+        [JsonProperty("options", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public virtual Resource ResourceOptions { get; set; }
 
         [JsonIgnore]
